@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>محققة حسابات ويندوز</title>
+<style>
+:root{--bg:#f3f6fb;--card:#fff;--text:#14213d;--muted:#5b6b86;--accent:#0067c0;--ok:#1b8a3f;--okbg:#e3f6e9;--bad:#c62828;--badbg:#fde7e7;--line:#d6dfec;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1624;--card:#18223a;--text:#eef2fa;--muted:#9fb0cc;--accent:#5aa8ff;--ok:#5fd68a;--okbg:#14301f;--bad:#ff8a8a;--badbg:#3a1a1a;--line:#2c3a58}}
+:root[data-theme="dark"]{--bg:#0f1624;--card:#18223a;--text:#eef2fa;--muted:#9fb0cc;--accent:#5aa8ff;--ok:#5fd68a;--okbg:#14301f;--bad:#ff8a8a;--badbg:#3a1a1a;--line:#2c3a58}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Segoe UI",Tahoma,"Noto Sans Arabic",system-ui,sans-serif;line-height:1.7;overflow-x:hidden}
+main{max-width:560px;margin:0 auto;padding:16px}
+h1{font-size:1.4rem;margin:8px 0 4px;text-align:center}
+.sub{color:var(--muted);text-align:center;margin:0 0 14px;font-size:.95rem}
+.bar{display:flex;justify-content:space-between;font-size:.9rem;color:var(--muted);margin-bottom:6px}
+.prog{height:8px;background:var(--line);border-radius:8px;overflow:hidden;margin-bottom:14px}
+.prog i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+.tag{display:inline-block;font-size:.8rem;padding:2px 10px;border-radius:20px;background:var(--accent);color:#fff;margin-bottom:8px}
+.user{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.av{width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:1.3rem}
+.q{font-size:1.05rem;margin:0 0 14px}
+.opts{display:grid;gap:10px}
+button{font:inherit;color:var(--text);background:var(--bg);border:2px solid var(--line);border-radius:12px;padding:12px 14px;text-align:right;cursor:pointer}
+button:hover:not(:disabled){border-color:var(--accent)}
+button.ok{background:var(--okbg);border-color:var(--ok)}
+button.bad{background:var(--badbg);border-color:var(--bad)}
+button.sel{border-color:var(--accent);background:var(--card)}
+button:disabled{cursor:default}
+.fb{margin-top:14px;padding:12px;border-radius:12px;background:var(--bg);border:1px solid var(--line);display:none}
+.fb b{display:block;margin-bottom:2px}
+.next,.go{margin-top:12px;background:var(--accent);color:#fff;border-color:var(--accent);text-align:center;width:100%;font-weight:600}
+.next{display:none}
+.center{text-align:center}
+.big{font-size:3rem;margin:0}
+.score{font-size:1.5rem;font-weight:700;color:var(--accent)}
+.learn{text-align:right;margin:0;padding:0;list-style:none}
+.learn li{padding:10px 0;border-bottom:1px solid var(--line)}
+.learn li:last-child{border:0}
+.cmp{display:flex;gap:10px;margin:12px 0}
+.cmp div{flex:1;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px}
+.cmp b{display:block;font-size:1.5rem;color:var(--accent)}
+.star{position:fixed;bottom:-40px;font-size:28px;pointer-events:none;z-index:50;animation:rise 3s ease-out forwards}
+@keyframes rise{0%{transform:translateY(0) rotate(0) scale(.6);opacity:1}100%{transform:translateY(-110vh) rotate(360deg) scale(1.3);opacity:0}}
+@media (prefers-reduced-motion:reduce){.star{animation-duration:1.5s}}
+.menu{display:grid;gap:12px}
+.menu button{padding:16px;font-weight:600;text-align:center}
+.menu small{display:block;font-weight:400;color:var(--muted)}
+.perm{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line)}
+.perm:last-of-type{border:0}
+.pill{flex:0 0 118px;text-align:center;color:#14213d;border-radius:12px;padding:8px 4px;font-weight:600;font-size:.92rem}
+.perm p{margin:0;flex:1}
+.back{background:transparent;text-align:center;width:100%;margin-top:8px;color:var(--muted)}
+footer{text-align:center;margin-top:28px;padding:18px 12px;border-top:1px solid var(--line)}
+footer .q2{font-size:1.1rem;font-weight:700;color:var(--accent);margin:0 0 6px}
+footer .t{margin:0;color:var(--muted)}
+.note{margin-top:14px;padding:14px;border-radius:12px;background:var(--okbg);border:2px solid var(--ok);text-align:center;font-size:1.05rem}
+</style>
+</head>
+<body>
+<main>
+<h1>🕵️‍♀️ محققة حسابات ويندوز</h1>
+<p class="sub" id="sub"></p>
+<div id="app"></div>
+<footer><p class="q2">🌟 كل معلومة تتعلمينها اليوم هي خطوة نحو إبداع الغد 🌟</p><p class="t">معلمة التقنية الرقمية / عبير القرني</p></footer>
+</main>
+<script>
+const TYPES={
+admin:["حساب مسؤول (Administrator)","الحساب المدمج في النظام بصلاحيات كاملة؛ يكون معطّلًا افتراضيًا، ولا تظهر له نافذة تأكيد عند تنفيذ المهام الحساسة."],
+adminuser:["حساب مستخدم بامتيازات إدارية","حساب عادي أُضيف إلى مجموعة المسؤولين؛ يثبّت البرامج ويغيّر إعدادات النظام، لكن تظهر له نافذة تأكيد (UAC) قبل كل إجراء."],
+ms:["حساب Microsoft","يُستخدم فيه البريد الإلكتروني، وتتزامن الإعدادات والملفات عبر الإنترنت مع OneDrive."],
+local:["حساب محلي (Local)","محفوظ على الجهاز فقط، باسم مستخدم وكلمة مرور، ولا يحتاج إنترنت أو بريدًا إلكترونيًا."]};
+const PRE=[
+["حساب يُستخدم لإصلاح الأعطال العميقة، ويكون مخفيًا ومعطّلًا في ويندوز بعد التثبيت.","admin"],
+["هدى تدخل ببريدها Outlook، وتظهر إعداداتها نفسها عند استخدام جهاز آخر.","ms"],
+["معلمة أنشأت حسابًا باسم Teacher على جهاز المختبر دون ربطه بأي بريد إلكتروني.","local"],
+["حساب يثبّت التطبيقات، لكن يظهر له السؤال «هل تسمح لهذا التطبيق بإجراء تغييرات؟».","adminuser"],
+["عند نسيان كلمة مرور هذا الحساب تُستعاد عبر موقع Microsoft، وتُحفظ ملفاته في OneDrive.","ms"],
+["جهاز في مكتبة بلا إنترنت، يدخل الموظف عليه باسم مستخدم محفوظ على الجهاز نفسه.","local"],
+["مديرة القسم أُضيف حسابها العادي إلى مجموعة المسؤولين لتثبّت البرامج بعد موافقتها على نافذة التأكيد.","adminuser"]];
+const POST=[
+["فني الصيانة فعّل الحساب المدمج باسم Administrator لإصلاح عطل عميق، ويعمل به بلا أي نافذة تأكيد.","admin"],
+["ليلى تسجّل الدخول ببريدها الإلكتروني، وتظهر ملفاتها وإعداداتها نفسها عند استخدام أي جهاز آخر.","ms"],
+["سارة أنشأت حسابها الأول على جهازها الجديد؛ تثبّت البرامج بحرية، لكن تظهر لها نافذة «هل تريد السماح؟» قبل كل تثبيت.","adminuser"],
+["جهاز قديم في البيت، يُفتح باسم مستخدم وكلمة مرور محفوظة عليه فقط، بلا إنترنت أو بريد.","local"],
+["نور تستعيد كلمة مرور حسابها عبر موقع Microsoft باستخدام بريدها الإلكتروني.","ms"],
+["أحمد أضاف والده حسابه العادي إلى مجموعة Administrators؛ يغيّر إعدادات النظام لكن بعد الموافقة على نافذة UAC.","adminuser"],
+["حساب باسم مستخدم فقط، لا يرتبط ببريد إلكتروني ولا يحتاج اتصالًا بالإنترنت لتسجيل الدخول.","local"]];
+const app=document.getElementById("app"),sub=document.getElementById("sub");
+let i=0,score=0,best=0,list=[],mode="pre",preScore=0;
+try{best=+localStorage.getItem("wa_best2")||0}catch(e){}
+const shuffle=a=>{a=a.slice();for(let k=a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[a[k],a[j]]=[a[j],a[k]]}return a};
+function intro(){
+sub.textContent="اختبار قبلي ← مراجعة ← اختبار بعدي";
+app.innerHTML=`<div class="card center"><p class="big">🔍</p><p>ستبدئين باختبار قبلي من 7 أسئلة لمعرفة مستواك، ثم تراجعين الأنواع الأربعة، ثم تخوضين اختبارًا بعديًا.</p><p>احصلي على <b>5 نقاط أو أكثر</b> في الاختبار البعدي لتتطاير النجوم! ⭐</p><button class="go" id="s">ابدئي الاختبار القبلي</button><button class="back" id="h">↩ القائمة الرئيسية</button></div>`;
+document.getElementById("s").onclick=()=>begin("pre");
+document.getElementById("h").onclick=home;
+}
+function begin(m){mode=m;i=0;score=0;list=shuffle(m==="pre"?PRE:POST);sub.textContent=m==="pre"?"الاختبار القبلي: بدون كشف الإجابات":"الاختبار البعدي: اختاري نوع الحساب الصحيح";show()}
+function show(){
+const [txt,ans]=list[i];
+const opts=shuffle(Object.keys(TYPES));
+const last=i+1>=list.length;
+app.innerHTML=`<div class="bar"><span>السؤال ${i+1} من ${list.length}</span><span>${mode==="pre"?"اختبار قبلي":"اختبار بعدي · النقاط: "+score}</span></div>
+<div class="prog"><i style="width:${i/list.length*100}%"></i></div>
+<div class="card"><span class="tag">${mode==="pre"?"قبلي":"بعدي"}</span><div class="user"><div class="av">👩‍💻</div><strong>أي نوع حساب هذا؟</strong></div>
+<p class="q">${txt}</p><div class="opts">${opts.map(k=>`<button data-k="${k}">${TYPES[k][0]}</button>`).join("")}</div>
+<div class="fb" id="fb"></div><button class="next" id="nx">${last?(mode==="pre"?"إنهاء الاختبار القبلي":"عرض النتيجة"):"السؤال التالي ←"}</button></div>`;
+app.querySelectorAll(".opts button").forEach(b=>b.onclick=()=>pick(b,ans));
+document.getElementById("nx").onclick=()=>{i++;i<list.length?show():(mode==="pre"?learn():finish())};
+}
+function pick(b,ans){
+const good=b.dataset.k===ans;
+if(good)score++;
+const btns=app.querySelectorAll(".opts button");
+btns.forEach(x=>x.disabled=true);
+if(mode==="post"){
+btns.forEach(x=>{if(x.dataset.k===ans)x.classList.add("ok")});
+if(!good)b.classList.add("bad");
+const fb=document.getElementById("fb");fb.style.display="block";
+fb.innerHTML=`<b>${good?"✅ أحسنتِ!":"❌ ليست الإجابة الصحيحة"}</b>${TYPES[ans][0]}: ${TYPES[ans][1]}`;
+}else b.classList.add("sel");
+document.getElementById("nx").style.display="block";
+}
+function learn(){
+preScore=score;
+sub.textContent="مراجعة سريعة قبل الاختبار البعدي";
+app.innerHTML=`<div class="card"><p class="center score">نتيجتك القبلية: ${preScore} من ${PRE.length}</p><p class="sub">راجعي الفروق جيدًا:</p>
+<ul class="learn">${Object.keys(TYPES).map(k=>`<li><b>${TYPES[k][0]}</b><br>${TYPES[k][1]}</li>`).join("")}</ul>
+<button class="go" id="g">ابدئي الاختبار البعدي</button></div>`;
+document.getElementById("g").onclick=()=>begin("post");
+}
+function stars(){
+for(let n=0;n<45;n++){const s=document.createElement("span");s.className="star";s.textContent=n%4?"⭐":"🌟";
+s.style.left=Math.random()*95+"vw";s.style.animationDelay=Math.random()*1.2+"s";s.style.fontSize=(20+Math.random()*26)+"px";
+document.body.appendChild(s);setTimeout(()=>s.remove(),4500)}
+}
+function finish(){
+sub.textContent="النتيجة النهائية";
+try{if(score>best){best=score;localStorage.setItem("wa_best2",best)}}catch(e){}
+const win=score>=5,d=score-preScore,cup=award("acc",score,POST.length);
+const prog=d>0?`تحسّنتِ بمقدار ${d} ${d>2?"نقاط":"نقطة"} 📈`:d===0?"نتيجتك ثابتة، راجعي الفروق وحاولي مجددًا":"انخفضت نتيجتك قليلًا، أعيدي المراجعة 💪";
+app.innerHTML=`<div class="card center"><p class="big">${win?"🏆":"📘"}</p>
+<p class="score">${win?"مبروك! حصلتِ على "+score+" نقاط":"حصلتِ على "+score+" نقاط"}</p>
+<p>${win?"أنتِ خبيرة حسابات ويندوز! ⭐":"تحتاجين 5 نقاط على الأقل لتتطاير النجوم، حاولي مرة أخرى."}</p>
+<div class="cmp"><div>الاختبار القبلي<b>${preScore}/${PRE.length}</b></div><div>الاختبار البعدي<b>${score}/${POST.length}</b></div></div>
+<p>${prog}</p>${cupHtml(cup)}<p class="sub">أفضل نتيجة بعدية: ${best}</p>
+<button class="go" id="a">إعادة المحاولة من البداية</button></div>`;
+document.getElementById("a").onclick=home;
+if(win)stars();
+}
+const PERMS=[
+["full","👑","التحكم الكامل","#ece0a8","أعلى إذن: قراءة وكتابة وتعديل وحذف، مع تغيير أذونات الملفات والمجلدات."],
+["mod","✏️","التعديل","#bbd8c9","قراءة وكتابة وتعديل وحذف الملفات والمجلدات الرئيسة والفرعية."],
+["rx","▶️","القراءة والتنفيذ","#fdf5e4","عرض الملفات والمجلدات الفرعية وتشغيل البرامج، وينطبق على كل ما بداخل المجلد."],
+["list","📂","عرض محتويات المجلد","#efe4ea","عرض الملفات والمجلدات الفرعية وتشغيل البرامج، لكنه ينطبق على المجلدات الفرعية فقط."],
+["read","👁️","القراءة","#e5827a","عرض الملفات والمجلدات والوصول إلى محتوياتها فقط."],
+["write","📝","الكتابة","#e8e9ee","الكتابة على الملفات وإضافة ملفات ومجلدات فرعية جديدة في المجلد الرئيس."]];
+const PN={};PERMS.forEach(p=>PN[p[0]]=p[2]);
+const PQ=[
+["معلمة تريد التحكم بكل شيء في المجلد، بما في ذلك تغيير أذونات الآخرين وحذفه.","full"],
+["طالبة تستطيع قراءة الملفات وكتابتها وتعديلها وحذفها دون تغيير الأذونات.","mod"],
+["إذن يسمح بعرض الملفات وتشغيل البرامج، وينطبق على الملفات والمجلدات بداخل المجلد.","rx"],
+["إذن يسمح بعرض الملفات وتشغيل البرامج، لكنه ينطبق على المجلدات الفرعية فقط.","list"],
+["مجلد مشترك تريدين أن ترى الزميلات ملفاته ويفتحنها فقط دون أي تغيير.","read"],
+["مجلد لتسليم الواجبات، يُسمح فيه بإضافة ملفات جديدة والكتابة عليها.","write"],
+["أي إذن لا ينتقل إلى الملفات داخل المجلد، بل يقتصر على المجلدات الفرعية؟","list"]];
+let pi=0,ps=0,pl=[];
+function permLearn(){
+sub.textContent="الجزء السادس: أنواع أذونات الملفات والبرامج";
+app.innerHTML=`<div class="card"><p class="center score">شرح مبسط للأذونات</p>${PERMS.map(p=>`<div class="perm"><div class="pill" style="background:${p[3]}">${p[1]} ${p[2]}</div><p>${p[4]}</p></div>`).join("")}<button class="go" id="ps">ابدئي اختبار الأذونات</button><button class="back" id="ph">↩ القائمة الرئيسية</button></div>`;
+document.getElementById("ps").onclick=permStart;
+document.getElementById("ph").onclick=home;
+}
+function permStart(){pi=0;ps=0;pl=shuffle(PQ);sub.textContent="اختبار الأذونات: اختاري الإذن المناسب";permShow()}
+function permShow(){
+const [txt,ans]=pl[pi];
+const opts=shuffle([ans,...shuffle(Object.keys(PN).filter(k=>k!==ans)).slice(0,3)]);
+app.innerHTML=`<div class="bar"><span>السؤال ${pi+1} من ${pl.length}</span><span>النقاط: ${ps}</span></div><div class="prog"><i style="width:${pi/pl.length*100}%"></i></div>
+<div class="card"><span class="tag">الأذونات</span><p class="q">${txt}</p><div class="opts">${opts.map(k=>`<button data-k="${k}">${PN[k]}</button>`).join("")}</div>
+<div class="fb" id="fb"></div><button class="next" id="nx">${pi+1>=pl.length?"عرض النتيجة":"السؤال التالي ←"}</button></div>`;
+app.querySelectorAll(".opts button").forEach(b=>b.onclick=()=>permPick(b,ans));
+document.getElementById("nx").onclick=()=>{pi++;pi<pl.length?permShow():permFinish()};
+}
+function permPick(b,ans){
+const good=b.dataset.k===ans;if(good)ps++;
+const btns=app.querySelectorAll(".opts button");
+btns.forEach(x=>{x.disabled=true;if(x.dataset.k===ans)x.classList.add("ok")});
+if(!good)b.classList.add("bad");
+const p=PERMS.find(x=>x[0]===ans),fb=document.getElementById("fb");
+fb.style.display="block";
+fb.innerHTML=`<b>${good?"✅ أحسنتِ!":"❌ ليست الإجابة الصحيحة"}</b>${p[2]}: ${p[4]}`;
+document.getElementById("nx").style.display="block";
+}
+function permFinish(){
+sub.textContent="نتيجة اختبار الأذونات";
+const win=ps>=5,cup=award("perm",ps,pl.length);
+app.innerHTML=`<div class="card center"><p class="big">${win?"🏆":"📘"}</p><p class="score">${win?"مبروك! حصلتِ على "+ps+" نقاط":"حصلتِ على "+ps+" نقاط"}</p>
+<p>${win?"أنتِ متمكنة من أذونات الملفات! ⭐":"تحتاجين 5 نقاط على الأقل لتتطاير النجوم، راجعي الشرح وحاولي مرة أخرى."}</p>
+${cupHtml(cup)}<button class="go" id="pf">🏅 عرض حصيلتي النهائية</button><button class="back" id="pa">إعادة الاختبار</button><button class="back" id="pr">مراجعة الشرح</button><button class="back" id="ph">↩ القائمة الرئيسية</button></div>`;
+document.getElementById("pa").onclick=permStart;
+document.getElementById("pf").onclick=finalScreen;
+document.getElementById("pr").onclick=permLearn;
+document.getElementById("ph").onclick=home;
+if(win)stars();
+}
+const C=["#ece0a8","#bbd8c9","#fdf5e4","#efe4ea","#e5827a","#e8e9ee","#cfe0f5","#f6d9c4","#d9e8c4"];
+const T={
+risk:{ico:"⚠️",name:"أخطار البصمة الرقمية",sm:"أربعة أخطار ← مواقف حقيقية للتفريق بينها",
+intro:"قد تؤثر البصمة الرقمية على دورة حياة النظام بأربع طرق، تعلّمي كيف تميزين بينها:",
+k:{sec:["الأخطار الأمنية","معلومات متاحة على الإنترنت قد يستغلها مجرمو الإنترنت لشن هجمات مستهدفة على النظام أو مستخدميه.",C[4]],
+rep:["إدارة السمعة","تعليقات أو مراجعات سلبية على الإنترنت قد تضر بصورة المؤسسة وثقة العملاء والمبيعات.",C[1]],
+comp:["التوافق","الالتزام بقوانين خصوصية البيانات لحماية المعلومات الشخصية وتجنب الغرامات والعقوبات.",C[0]],
+mon:["المراقبة","متابعة البصمة الرقمية بانتظام، ومنها وسائل التواصل، لاكتشاف الأخطار والاستجابة لها.",C[6]]},
+q:[["موظف نشر صورة بطاقة عمله وبريد الشركة على حسابه، فاستخدم مخترق هذه المعلومات لإرسال رسالة احتيال مستهدفة لزملائه.","sec"],
+["كتب عدة عملاء تعليقات سلبية عن متجر إلكتروني، فانخفضت ثقة الزبائن وتراجعت المبيعات.","rep"],
+["مدرسة خزّنت بيانات طالباتها دون حماية مخالفةً لقانون خصوصية البيان��ت، فتعرضت لغرامة.","comp"],
+["فريق التقنية يراجع كل أسبوع ما يُنشر عن الشركة في وسائل التواصل ليكتشف أي خطر مبكرًا.","mon"],
+["تنبيه آلي يخبر إدارة الشركة فور ظهور اسمها في منشورات مشبوهة لتتصرف بسرعة.","mon"],
+["معلومات الموظفين المنشورة علنًا ساعدت مجرمين على تخمين كلمات المرور وشن هجوم على النظام.","sec"],
+["فيديو ينتقد خدمة جامعة انتشر بين الناس فأثّر على صورتها وعلى إقبال الطالبات.","rep"]]},
+trace:{ico:"👣",name:"آثار التعقب الرقمية",sm:"أثر مقصود أم غير مقصود؟ استنتجي الفرق",
+intro:"آثار التعقب كالآثار الطبيعية، تتراكم لتكوّن بصمتك الرقمية. وهي نوعان:",
+k:{int:["أثر مقصود ومرئي","ما تنشرينه أو ترسلينه بإرادتك فتراه أنتِ: رسائل البريد، النصوص، المدونات، الصور، التعليقات على يوتيوب، والإعجابات على فيسبوك.",C[1]],
+unint:["أثر غير مقصود وغير مرئي","ما يُسجَّل عنك دون انتباهك: سجلات زيارة المواقع، وعمليات البحث، وتحركاتك على الإنترنت وتواصلك مع الآخرين.",C[4]]},
+q:[["كتبتِ تعليقًا على مقطع في يوتيوب.","int"],["سجّل الموقع الصفحات التي زرتِها دون أن تعلمي.","unint"],["نشرتِ صورة في حسابك على وسائل التواصل.","int"],["احتفظ محرك البحث بكل الكلمات التي بحثتِ عنها.","unint"],["أرسلتِ بريدًا إلكترونيًا إلى معلمتك.","int"],["سجّل الخادم تحركاتك بين صفحات الموقع ورقم جهازك.","unint"],["ضغطتِ إعجابًا على منشور لصديقتك.","int"]]},
+log:{ico:"🗂️",name:"سجلات الخادم",sm:"ماذا يسجّل الخادم عند زيارتك؟",
+intro:"عند فتحك صفحة إلكترونية ترسلين طلبًا إلى الخادم، فيسجّل عنه البيانات التالية. لا يراها إلا مالكو الموقع، وتتبع تصفحك بصمت. اختاري الحقل المناسب في كل سطر من السجل:",
+k:{ip:["عنوان بروتوكول الإنترنت (IP)","رقم يحدد مصدر الاتصال بالشبكة.",C[0]],
+dev:["هوية الحاسب المتصل","رقم خاص يعرّف الجهاز الذي يتصل بالخادم.",C[6]],
+login:["معرّف تسجيل الدخول","اسم الزائر أو رقمه إن سجّل دخوله.",C[1]],
+time:["تاريخ ووقت الاتصال","متى حدث الاتصال بالضبط.",C[7]],
+method:["طريقة الطلب","نوع الطلب المرسل للخادم، مثل GET.",C[3]],
+file:["اسم وموقع الملف المطلوب","أي ملف طلبته الزائرة وأين يوجد.",C[8]],
+status:["حالة بروتوكول HTTP","نتيجة الطلب: نجح أو فشل، مثل 200 أو 404.",C[4]],
+size:["حجم الملف المطلوب","كم بلغ حجم ما أُرسل للزائرة.",C[5]],
+ref:["الصفحة الطالبة للاتصال","الصفحة التي جاءت منها الزائرة إلى الموقع.",C[2]]},
+q:[["السطر يحتوي الرقم 192.0.2.45 الذي يحدد مصدر الاتصال بالشبكة.","ip"],["السطر يقول: 12 نوفمبر، 10:32 صباحًا، وقت دخول الزائرة.","time"],["السطر يبيّن أن الزائرة طلبت الملف images/logo.png.","file"],["السطر يبيّن أن الطلب نجح بالرمز 200، وفي زيارة أخرى فشل بالرمز 404.","status"],["ظهر في السجل اسم مستخدم الطالبة بعد دخولها إلى بوابة المدرسة.","login"],["السطر يوضح أن الطلب كان من نوع GET لتحميل الصفحة.","method"],["عيّن الخادم رقمًا خاصًا يعرّف حاسبها في كل زيارة.","dev"]]},
+fw:{ico:"🛡️",name:"جدار الحماية ومكافح الفيروسات",sm:"فرّقي بين الحارس وعامل النظافة",
+intro:"كلاهما أداة مهمة لحماية الحاسب، لكن لكل منهما وظيفة مختلفة. وفي ويندوز يوجد الاثنان: جدار Windows Defender ومايكروسوفت ديفندر.",
+k:{fw:["جدار الحماية","نظام أمان يراقب حركة مرور الشبكة ويتحكم فيها بقواعد أمان، ويمنع الوصول غير المصرح به. قد يكون أجهزة أو برمجيات، ولا يفحص الملفات.",C[6]],
+av:["مكافح الفيروسات","برنامج يكتشف البرامج الضارة ويمنعها ويزيلها من الجهاز، ويفحص الملفات والبرامج.",C[8]],
+none:["لا يكفي أيٌّ منهما","جدار الحماية وحده لا يحمي من الاحتيال الإلكتروني والإعلانات المنبثقة والبريد المزعج، فالوعي والحذر مطلوبان.",C[7]]},
+q:[["متسلل حاول الدخول إلى جهاز المعلمة عبر الشبكة دون إذن.","fw"],["نزّلت طالبة ملفًا يحتوي برنامجًا ضارًا، ويلزم اكتشافه وإزالته من الجهاز.","av"],["نريد مراقبة حركة البيانات الداخلة والخارجة من الجهاز وفق قواعد أمان.","fw"],["فحص ذاكرة فلاش متصلة بالجهاز بحثًا عن فيروسات.","av"],["وصلتك رسالة تدّعي أنها من البنك وتطلب كلمة مرورك.","none"],["ظهرت نوافذ إعلانات منبثقة مزعجة أثناء التصفح.","none"],["اكتشف مايكروسوفت ديفندر ملفًا خطيرًا داخل الجهاز وعزله.","av"]]}};
+let tk,ti,ts,tl;
+function tLearn(k){
+tk=k;const t=T[k];sub.textContent=t.name;
+app.innerHTML=`<div class="card"><p class="center score">${t.ico} ${t.name}</p><p>${t.intro}</p>${Object.values(t.k).map(v=>`<div class="perm"><div class="pill" style="background:${v[2]}">${v[0]}</div><p>${v[1]}</p></div>`).join("")}<button class="go" id="ta">ابدئي الاختبار</button><button class="back" id="th">↩ القائمة الرئيسية</button></div>`;
+document.getElementById("ta").onclick=tStart;
+document.getElementById("th").onclick=home;
+}
+function tStart(){ti=0;ts=0;tl=shuffle(T[tk].q);sub.textContent=T[tk].name+": اختاري الإجابة المناسبة";tShow()}
+function tShow(){
+const t=T[tk],[txt,ans]=tl[ti],ks=Object.keys(t.k);
+const opts=ks.length<=4?shuffle(ks):shuffle([ans,...shuffle(ks.filter(x=>x!==ans)).slice(0,3)]);
+app.innerHTML=`<div class="bar"><span>السؤال ${ti+1} من ${tl.length}</span><span>النقاط: ${ts}</span></div><div class="prog"><i style="width:${ti/tl.length*100}%"></i></div>
+<div class="card"><span class="tag">${t.name}</span><p class="q">${txt}</p><div class="opts">${opts.map(o=>`<button data-k="${o}">${t.k[o][0]}</button>`).join("")}</div>
+<div class="fb" id="fb"></div><button class="next" id="nx">${ti+1>=tl.length?"عرض النتيجة":"السؤال التالي ←"}</button></div>`;
+app.querySelectorAll(".opts button").forEach(b=>b.onclick=()=>tPick(b,ans));
+document.getElementById("nx").onclick=()=>{ti++;ti<tl.length?tShow():tFinish()};
+}
+function tPick(b,ans){
+const good=b.dataset.k===ans,v=T[tk].k[ans];if(good)ts++;
+app.querySelectorAll(".opts button").forEach(x=>{x.disabled=true;if(x.dataset.k===ans)x.classList.add("ok")});
+if(!good)b.classList.add("bad");
+const fb=document.getElementById("fb");fb.style.display="block";
+fb.innerHTML=`<b>${good?"✅ أحسنتِ!":"❌ ليست الإجابة الصحيحة"}</b>${v[0]}: ${v[1]}`;
+document.getElementById("nx").style.display="block";
+}
+function tFinish(){
+const win=ts>=5,cup=award(tk,ts,tl.length);
+sub.textContent="نتيجة: "+T[tk].name;
+app.innerHTML=`<div class="card center"><p class="big">${win?"🏆":"📘"}</p><p class="score">${win?"مبروك! ":""}حصلتِ على ${ts} من ${tl.length}</p>
+<p>${win?"أداء رائع، تمكّنتِ من التفريق بينها! ⭐":"تحتاجين 5 نقاط على الأقل لتتطاير النجوم، راجعي الشرح وحاولي مرة أخرى."}</p>
+${cupHtml(cup)}
+${tk==="fw"?`<div class="note">💡 <b>تذكّري:</b> جدار الحماية هو <b>حارس البوابة</b>، ومكافح الفيروسات هو <b>عامل النظافة</b> داخل الجهاز.</div>`:""}
+<button class="go" id="ta">إعادة الاختبار</button><button class="back" id="tr">مراجعة الشرح</button><button class="back" id="th">↩ القائمة الرئيسية</button></div>`;
+document.getElementById("ta").onclick=tStart;
+document.getElementById("tr").onclick=()=>tLearn(tk);
+document.getElementById("th").onclick=home;
+if(win)stars();
+}
+let cups={};try{cups=JSON.parse(localStorage.getItem("wa_cups")||"{}") }catch(e){}
+function award(k,s,n){const got=s>n/2;if(got){cups[k]=1;try{localStorage.setItem("wa_cups",JSON.stringify(cups))}catch(e){}}return got}
+const cupHtml=g=>g?`<div class="note">🏆 <b>كأس لكِ!</b> أجبتِ عن أكثر من نصف الأسئلة بشكل صحيح</div>`:`<p class="sub">الكأس لمن تجيب عن أكثر من نصف الأسئلة، حاولي مرة أخرى 🏆</p>`;
+function home(){
+sub.textContent="اختاري الجزء الذي تريدين البدء به";
+const ord=["الأول","الثاني","الثالث","الرابع","الخامس","السادس"];
+const items=[...Object.keys(T).map(k=>[k,T[k].ico,T[k].name,T[k].sm,()=>tLearn(k)]),["acc","🔐","حسابات ويندوز","اختبار قبلي ← مراجعة ← اختبار بعدي",intro],["perm","📁","الأذونات","شرح مبسط ← اختبار وتحفيز",permLearn]];
+app.innerHTML=`<div class="menu">${items.map((it,n)=>`<button id="m_${it[0]}">${it[1]} الجزء ${ord[n]}: ${it[2]} ${cups[it[0]]?"🏆":""}<small>${it[3]}</small></button>`).join("")}<button id="m_fin" class="go" style="text-align:center">🏅 حصيلة الكؤوس</button></div>`;
+items.forEach(it=>document.getElementById("m_"+it[0]).onclick=it[4]);
+document.getElementById("m_fin").onclick=finalScreen;
+}
+function finalScreen(){
+const n=Object.keys(cups).length;
+sub.textContent="ختام اللعبة";
+const msg=n===6?"أنتِ بطلة الأمن الرقمي! أحسنتِ في كل الأجزاء 🌟":n>=4?"أداء مميز! أنتِ على بعد خطوة من الكؤوس كلها 👏":n>=1?"بداية رائعة، كل كأس جديد يقرّبكِ من لقب البطلة 💪":"الرحلة بدأت للتو، أكملي الأجزاء وستجمعين كؤوسك بإذن الله 🌱";
+app.innerHTML=`<div class="card center"><p class="big">${n>0?"🏆":"📘"}</p><p class="score">كسبتِ ${n} من 6 كؤوس</p><p style="font-size:1.6rem;margin:6px 0">${"🏆".repeat(n)}${"▫️".repeat(6-n)}</p><div class="note">${msg}</div><button class="go" id="fh">↩ القائمة الرئيسية</button></div>`;
+document.getElementById("fh").onclick=home;
+if(n>=4)stars();
+}
+home();
+</script>
+</body>
+</html>
